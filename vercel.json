@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "api/convert.js": {
+      "memory": 512,
+      "maxDuration": 30
+    }
+  },
+  "regions": ["icn1"]
+}
