@@ -248,7 +248,7 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           model: "claude-sonnet-5",
-          max_tokens: 1500,
+          max_tokens: 4096,
           messages: [
             {
               role: "user",
@@ -286,8 +286,9 @@ module.exports = async function handler(req, res) {
     console.log("Anthropic response content:", JSON.stringify(data.content));
 
     let resultText;
-    if (data.content && data.content[0] && data.content[0].text) {
-      resultText = data.content[0].text;
+    const textBlock = (data.content || []).find(function(block) { return block.type === "text"; });
+    if (textBlock && textBlock.text) {
+      resultText = textBlock.text;
     } else if (data.stop_reason === "refusal") {
       resultText = "죄송해요, 이 악보는 분석할 수 없습니다. (저작권 관련 안전장치로 인한 거부)";
     } else {
